@@ -1,0 +1,36 @@
+[1] Create directory structure.
+[2] Create a NPM project and install all dependencies.
+    - Dependencies:
+        - Express.js
+        - EJS: express-ejs-layout
+    - Dev-Dependencies:
+        - nodemon
+[3] Create Express server - Create a server.js file.
+[4] Create Home page using HTML and CSS.
+    - include tailwind css.
+[5] Create Cart page.
+    - order summary section.
+    - empty cart section.
+[6] Create Order controller and link it in server.js
+[7] Create Order view with table for customer and admin.
+[8] Create Orders single page with status.
+[9] Create login page with route.
+[10] Create register page with route.
+[11] Build register CRUD
+     - dependencies express-flash express-session cookie-parser dotenv
+     - status code article https://www.restapitutorial.com/httpstatuscodes.HTML
+     - Database connection. dependencies mongoose
+[12] Build login using passport.
+     - install dependencies passport passport-local express-session
+[13] Create menu model and put dummy data.
+[14] Fetch all pizzas from database and show on home page.
+[15] Add to cart functionality.
+     - use connect-mongo for session store.
+     - axios to send ajax request.
+     - install notification library npm i noty https://ned.im/noty/#/
+[16] Make order on carts page.
+[17] Place order functionality.
+[18] Order tracker.
+     - dependencies moment
+[19] Socket connection.
+     - dependencies socket.io
