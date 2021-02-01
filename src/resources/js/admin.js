@@ -22,7 +22,6 @@ const initAdmin = async (socket) => {
             orderId: formData.get("orderId"), 
             status: formData.get("status")
         });
-        console.log(formData.get("status"));
     })); 
     
     function renderItems(items) {

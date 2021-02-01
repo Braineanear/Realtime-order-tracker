@@ -1915,7 +1915,6 @@ var initAdmin = /*#__PURE__*/function () {
                   orderId: formData.get("orderId"),
                   status: formData.get("status")
                 });
-                console.log(formData.get("status"));
               });
             });
             // Socket
