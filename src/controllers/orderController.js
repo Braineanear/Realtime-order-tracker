@@ -17,11 +17,13 @@ exports.createOrder = catchAsync(async(req, res, next) => {
         address
     });
     if(order) {
-        // Emit
-        const eventEmitter = req.app.get('eventEmitter');
-        eventEmitter.emit('orderPlaced', order);
-        delete req.session.cart;
-        return res.json({ message: "Order placed successfully"});
+        Order.populate(order, { path: 'userId' }, (err, placedOrder) => {
+            // Emit
+            const eventEmitter = req.app.get('eventEmitter');
+            eventEmitter.emit('orderPlaced', order);
+            delete req.session.cart;
+            return res.json({ message: "Order placed successfully"});
+        });
     } else {
         req.flash('error', 'Something went wrong');
         return res.redirect('/cart');
