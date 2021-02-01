@@ -99,7 +99,10 @@ if(paymentForm){
 
 
 // Socket
-let socket = io({transports: ['websocket']});
+let socket = io('https://real-time-order-tracker.herokuapp.com/',{
+    path: '/socket.io-client',
+    transports: ['websocket']
+});
 
 // Join
 if(order) {

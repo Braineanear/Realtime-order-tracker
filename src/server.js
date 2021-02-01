@@ -75,8 +75,10 @@ const setUpExpress = () => {
       origin: "https://real-time-order-tracker.herokuapp.com/",
       methods: ["GET", "POST"]
     },
-    transports: ['websocket']
+    path: '/socket.io-client'
   });
+
+  io.set('transports', ['websocket']);
 
   io.on('connection', (socket) => {
     //Join 
