@@ -1,8 +1,8 @@
-import chalk from 'chalk';
-import mongoose from 'mongoose';
-import { config } from 'dotenv';
+const chalk = require('chalk');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
-config({ path: 'config.env' });
+dotenv.config({ path: 'config.env' });
 
 const connectDB = async () => {
   const DB = process.env.DATABASE_CONNECTION.replace(
@@ -46,4 +46,4 @@ const connectDB = async () => {
   });
 };
 
-export default connectDB;
+module.exports = connectDB;
