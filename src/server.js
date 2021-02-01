@@ -75,10 +75,9 @@ const setUpExpress = () => {
       origin: "https://real-time-order-tracker.herokuapp.com/",
       methods: ["GET", "POST"]
     },
-    path: '/socket.io-client'
+    path: '/socket.io-client',
+    transports: ['websocket']
   });
-
-  io.set('transports', ['websocket']);
 
   io.on('connection', (socket) => {
     //Join 
@@ -135,4 +134,4 @@ const setupServer = (isClusterRequired) => {
   }
 };
 
-setupServer(false);
+setupServer(true);
