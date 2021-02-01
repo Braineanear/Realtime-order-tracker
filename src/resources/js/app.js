@@ -99,7 +99,7 @@ if(paymentForm){
 
 
 // Socket
-let socket = io();
+let socket = io({transports: ['websocket']});
 
 // Join
 if(order) {

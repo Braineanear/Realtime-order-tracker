@@ -2124,7 +2124,9 @@ if (paymentForm) {
 } // Socket
 
 
-var socket = io(); // Join
+var socket = io({
+  transports: ['websocket']
+}); // Join
 
 if (order) {
   socket.emit('join', "order_".concat(order._id));

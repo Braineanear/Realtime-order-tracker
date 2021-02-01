@@ -72,9 +72,10 @@ const setUpExpress = () => {
 
   const io = require('socket.io')(server, {
     cors: {
-      origin: "localhost:5000",
+      origin: "https://real-time-order-tracker.herokuapp.com/",
       methods: ["GET", "POST"]
-    }
+    },
+    transports: ['websocket']
   });
 
   io.on('connection', (socket) => {
