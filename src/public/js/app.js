@@ -2124,10 +2124,7 @@ if (paymentForm) {
 } // Socket
 
 
-var socket = io('https://real-time-order-tracker.herokuapp.com/', {
-  path: '/socket.io-client',
-  transports: ['websocket']
-}); // Join
+var socket = io.connect(); // Join
 
 if (order) {
   socket.emit('join', "order_".concat(order._id));

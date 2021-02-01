@@ -70,14 +70,7 @@ const setUpExpress = () => {
     console.log(`App running on port ${chalk.greenBright(port)}...`);
   }); 
 
-  const io = require('socket.io')(server, {
-    cors: {
-      origin: "https://real-time-order-tracker.herokuapp.com/",
-      methods: ["GET", "POST"]
-    },
-    path: '/socket.io-client',
-    transports: ['websocket']
-  });
+  const io = require('socket.io')(server);
 
   io.on('connection', (socket) => {
     //Join 
@@ -134,4 +127,4 @@ const setupServer = (isClusterRequired) => {
   }
 };
 
-setupServer(true);
+setupServer(false);
