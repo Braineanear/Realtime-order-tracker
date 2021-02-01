@@ -1,6 +1,6 @@
 const Menu = require('../models/menuModel.js');
 const catchAsync = require('../utils/catchAsync.js');
-const AppError = require('../utils/AppError.js');
+const AppError = require('../utils/appError.js');
 
 
 exports.homePage = catchAsync(async (req, res, next) => {
