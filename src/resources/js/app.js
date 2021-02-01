@@ -99,7 +99,7 @@ if(paymentForm){
 
 
 // Socket
-let socket = io.connect();
+let socket = io();
 
 // Join
 if(order) {

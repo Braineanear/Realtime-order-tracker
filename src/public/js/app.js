@@ -2123,7 +2123,7 @@ if (paymentForm) {
 } // Socket
 
 
-var socket = io.connect(); // Join
+var socket = io(); // Join
 
 if (order) {
   socket.emit('join', "order_".concat(order._id));
