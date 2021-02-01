@@ -1,12 +1,12 @@
-import chalk from 'chalk';
-import { config } from 'dotenv';
-import cluster from 'cluster';
-import os from 'os';
-// eslint-disable-next-line import/no-named-as-default-member
-import app from './app.js';
-import connectDB from './config/db.js';
+const Emitter = require('events');
+const chalk = require('chalk');
+const dotenv = require('dotenv');
+const cluster = require('cluster');
+const numCores = require('os').cpus().length;
 
-const numCores = os.cpus().length;
+const app = require('./app');
+const connectDB = require('./config/db');
+
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (uncaughtExc) => {
@@ -59,7 +59,7 @@ const setupWorkerProcesses = () => {
 
 // Setup an express server and define port to listen all incoming requests for this application
 const setUpExpress = () => {
-  config({ path: 'config.env' });
+  dotenv.config({ path: 'config.env' });
 
   // Connect to MongoDB
   connectDB();
@@ -68,6 +68,32 @@ const setUpExpress = () => {
 
   const server = app.listen(port, () => {
     console.log(`App running on port ${chalk.greenBright(port)}...`);
+  }); 
+
+  const io = require('socket.io')(server, {
+    cors: {
+      origin: "localhost:5000",
+      methods: ["GET", "POST"]
+    }
+  });
+
+  io.on('connection', (socket) => {
+    //Join 
+    socket.on('join', (roomName) => {
+      socket.join(roomName);
+    });
+  });
+
+  // Event Emitter
+  const eventEmitter = new Emitter();
+  app.set('eventEmitter', eventEmitter);
+
+  eventEmitter.on('orderUpdated', (data) => {
+    io.to(`order_${data.id}`).emit('orderUpdated', data);
+  })
+
+  eventEmitter.on('orderPlaced', (data) => {
+    io.to('adminRoom').emit('orderPlaced', data);
   });
 
   // In case of an error

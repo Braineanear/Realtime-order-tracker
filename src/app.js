@@ -1,32 +1,56 @@
-import express from 'express';
-import morgan from 'morgan';
-import path from 'path';
-import { fileURLToPath } from 'url';
+const express = require('express');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const path = require('path');
+const dotenv = require('dotenv');
 
-import ejs from 'ejs';
-import expressLayout from 'express-ejs-layout';
-import cookieParser from 'cookie-parser';
-import rateLimit from 'express-rate-limit';
-import helmet from 'helmet';
-import mongoSanitize from 'express-mongo-sanitize';
-import xss from 'xss-clean';
-import cors from 'cors';
-import compression from 'compression';
+const ejs = require('ejs');
+const expressLayout = require('express-ejs-layouts');
+const cookieParser = require('cookie-parser');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const cors = require('cors');
+const compression = require('compression');
+const session = require('express-session');
+const flash = require('express-flash');
+const MongoStore = require('connect-mongo')(session);
+const methodOverride = require('method-override');
+const passport = require('passport');
 
-import AppError from './utils/appError.js';
-import globalErrorHandler from './controllers/errorController.js';
+const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controllers/errorController');
 
-import userRouter from './routes/userRoutes.js';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const indexRouter = require('./routes/indexRoutes');
+const userRouter = require('./routes/userRoutes');
+const orderRouter = require('./routes/orderRoutes');
+const adminRouter = require('./routes/adminRoutes');
 
 const app = express();
+
+dotenv.config({ path: 'config.env' });
 
 app.enable('trust proxy');
 
 // Set Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+
+// Set flash
+app.use(flash());
+
+// Method override
+app.use(
+  methodOverride(function (req, res) {
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+      // look in urlencoded POST bodies and delete it
+      let method = req.body._method
+      delete req.body._method
+      return method
+    }
+  })
+)
 
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -38,6 +62,27 @@ app.set('view engine', 'ejs');
 
 // Set Cookie parser
 app.use(cookieParser());
+
+// Set Session Config
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 24 hour
+  store: new MongoStore({ mongooseConnection: mongoose.connection })
+}))
+
+// Passport config
+require('./config/passport')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Global middleware
+app.use((req, res, next) => {
+  res.locals.session = req.session
+  res.locals.user = req.user
+  next()
+})
 
 // Set security HTTP headers
 app.use(helmet());
@@ -77,14 +122,17 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/users', userRouter);
+app.use('/', indexRouter);
+app.use('/user', userRouter);
+app.use('/orders', orderRouter);
+app.use('/admin', adminRouter);
 
 // When someone access route that does not exist
 app.all('*', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  res.status(404).render('error/404');
 });
 
 // Handling Global Errors
 app.use(globalErrorHandler);
 
-export default app;
+module.exports = app;
