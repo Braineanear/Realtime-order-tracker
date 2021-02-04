@@ -66,7 +66,7 @@
     "slugify": "^1.4.6",
     "socket.io": "^3.1.0",
     "streamifier": "^0.1.1",
-    "stripe": "^8.132.0",
+    "stripe": "^8.133.0",
     "validator": "^13.5.2",
     "xss-clean": "^0.1.1"
   },
