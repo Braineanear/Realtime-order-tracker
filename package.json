@@ -30,7 +30,7 @@
     "eslint-plugin-react": "^7.22.0",
     "laravel-mix": "^6.0.11",
     "nodemon": "^2.0.7",
-    "postcss": "^8.2.5",
+    "postcss": "^8.2.6",
     "prettier": "^2.2.1",
     "webpack": "^5.21.2"
   },
