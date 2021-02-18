@@ -50,7 +50,7 @@
     "express-ejs-layouts": "^2.5.0",
     "express-flash": "0.0.2",
     "express-mongo-sanitize": "^2.0.2",
-    "express-rate-limit": "^5.2.5",
+    "express-rate-limit": "^5.2.6",
     "express-session": "^1.17.1",
     "helmet": "^4.4.1",
     "method-override": "^3.0.0",
