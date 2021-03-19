@@ -11,6 +11,7 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
+const csrf = require('csurf');
 const cors = require('cors');
 const compression = require('compression');
 const session = require('express-session');
@@ -19,13 +20,13 @@ const MongoStore = require('connect-mongo')(session);
 const methodOverride = require('method-override');
 const passport = require('passport');
 
-const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 
 const indexRouter = require('./routes/indexRoutes');
 const userRouter = require('./routes/userRoutes');
 const orderRouter = require('./routes/orderRoutes');
 const adminRouter = require('./routes/adminRoutes');
+const menuRouter = require('./routes/menuRoutes');
 
 const app = express();
 
@@ -42,15 +43,15 @@ app.use(flash());
 
 // Method override
 app.use(
-  methodOverride(function (req, res) {
+  methodOverride((req) => {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
       // look in urlencoded POST bodies and delete it
-      let method = req.body._method
-      delete req.body._method
-      return method
+      const method = req.body._method;
+      delete req.body._method;
+      return method;
     }
   })
-)
+);
 
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -63,26 +64,35 @@ app.set('view engine', 'ejs');
 // Set Cookie parser
 app.use(cookieParser());
 
+app.use(csrf({ cookie: true }));
+
 // Set Session Config
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 24 hour
-  store: new MongoStore({ mongooseConnection: mongoose.connection })
-}))
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: true,
+      maxAge: 1000 * 60 * 60 * 24
+    }, // 24 hour
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
+  })
+);
 
 // Passport config
 require('./config/passport')(passport);
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Global middleware
 app.use((req, res, next) => {
-  res.locals.session = req.session
-  res.locals.user = req.user
-  next()
-})
+  res.locals.session = req.session;
+  res.locals.user = req.user;
+  next();
+});
 
 // Set security HTTP headers
 app.use(helmet());
@@ -94,6 +104,13 @@ const limiter = rateLimit({
   messege: 'Too many requests from this IP, Please try again in an hour!'
 });
 app.use('/', limiter);
+
+app.use((req, res, next) => {
+  const token = req.csrfToken();
+  res.cookie('XSRF-TOKEN', token);
+  res.locals.csrfToken = token;
+  next();
+});
 
 //Date sanitization against NoSQL query injection
 app.use(mongoSanitize());
@@ -126,6 +143,7 @@ app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/orders', orderRouter);
 app.use('/admin', adminRouter);
+app.use('/menu', menuRouter);
 
 // When someone access route that does not exist
 app.all('*', (req, res, next) => {

@@ -1,6 +1,15 @@
 const express = require('express');
-const {loginPage, registerPage, register, login, logout} = require('../controllers/authController');
-const {getUserOrders, getSingleOrder} = require('../controllers/orderController');
+const {
+  loginPage,
+  registerPage,
+  register,
+  login,
+  logout
+} = require('../controllers/authController');
+const {
+  getUserOrders,
+  getSingleOrder
+} = require('../controllers/orderController');
 const guest = require('../middlewares/guest');
 const auth = require('../middlewares/auth');
 

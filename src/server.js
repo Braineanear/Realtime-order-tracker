@@ -7,7 +7,6 @@ const numCores = require('os').cpus().length;
 const app = require('./app');
 const connectDB = require('./config/db');
 
-
 // Handle uncaught exceptions
 process.on('uncaughtException', (uncaughtExc) => {
   // Won't execute
@@ -68,12 +67,12 @@ const setUpExpress = () => {
 
   const server = app.listen(port, () => {
     console.log(`App running on port ${chalk.greenBright(port)}...`);
-  }); 
+  });
 
   const io = require('socket.io')(server);
 
   io.on('connection', (socket) => {
-    //Join 
+    //Join
     socket.on('join', (roomName) => {
       socket.join(roomName);
     });
@@ -85,12 +84,14 @@ const setUpExpress = () => {
 
   eventEmitter.on('orderUpdated', (data) => {
     io.to(`order_${data.id}`).emit('orderUpdated', data);
-  })
+  });
 
   eventEmitter.on('orderPlaced', (data) => {
     io.to('adminRoom').emit('orderPlaced', data);
   });
-
+  eventEmitter.on('productCreated', (data) => {
+    io.to('adminRoom').emit('productCreated', data);
+  });
   // In case of an error
   app.on('error', (appErr, appCtx) => {
     console.error('app error', appErr.stack);
