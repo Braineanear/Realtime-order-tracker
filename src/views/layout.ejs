@@ -31,7 +31,6 @@
                 <li class="ml-6"><a href="/user/register">Register</a></li>
                 <li class="ml-6"><a href="/user/login">Login</a></li>
                 <% } %>
-                <% if(user.role !== "admin") { %>
                 <li class="ml-6">
                     <a href="/cart" class="inline-block px-4 py-2 rounded-full flex items-center">
                         <span id="cartCounter"
@@ -39,7 +38,6 @@
                         <img src="/img/cart.png" alt="">
                     </a>
                 </li>
-                <% } %>
             </ul>
         </div>
     </nav>
