@@ -2,7 +2,7 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 col-gap-12 row-gap-16">
       <% menu.forEach(function(item) { %>
       <div class="w-full md:w-64">
-          <img class="h-40 mb-4 mx-auto" src="<%= item.image %>" alt="">
+          <img class="h-40 mb-4 mx-auto" src="/img/<%= item.image %>" alt="">
           <div class="text-center">
               <h2 class="mb-4 text-lg"><%= item.name %></h2>
               <span class="size py-1 px-4 rounded-full uppercase text-xs"><%= item.size %></span>
