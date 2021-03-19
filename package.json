@@ -65,7 +65,7 @@
     "passport-local": "^1.0.0",
     "sharp": "^0.27.2",
     "slugify": "^1.4.7",
-    "socket.io": "^3.1.2",
+    "socket.io": "^4.0.0",
     "streamifier": "^0.1.1",
     "stripe": "^8.138.0",
     "validator": "^13.5.2",
