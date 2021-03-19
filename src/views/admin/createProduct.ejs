@@ -1,0 +1,49 @@
+<section class="flex justify-center pt-24">
+  <div class="w-full max-w-xs">
+      <form action="/admin/createProduct" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <% if(messages.error) { %>
+          <span class="text-red-500 text-sm"><%= messages.error %></span>
+          <% } %>
+          <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="ProductName">
+                  Product Name
+              </label>
+              <input name="name"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="ProductName" type="text" placeholder="Enter product name">
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="ProductImage">
+                Product Image
+            </label>
+            <input name="image"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="ProductImage" type="text" placeholder="Enter product image link">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="ProductSize">
+              Product Size
+          </label>
+          <input name="size"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="ProductSize" type="text" placeholder="Enter product size">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="ProductPrice">
+              Product Price
+          </label>
+          <input name="price"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="ProductPrice" type="text" placeholder="Enter product price">
+        </div>
+        <div class="flex items-center justify-between">
+          <button
+              class="btn-primary rounded-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit">
+              Create
+          </button>
+      </div>
+      </form>
+  </div>
+</section>
