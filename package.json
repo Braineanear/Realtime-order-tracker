@@ -62,7 +62,7 @@
     "noty": "^3.2.0-beta",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "sharp": "^0.27.1",
+    "sharp": "^0.27.2",
     "slugify": "^1.4.7",
     "socket.io": "^3.1.1",
     "streamifier": "^0.1.1",
