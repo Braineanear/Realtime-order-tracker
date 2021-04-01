@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@stripe/stripe-js": "^1.13.2",
-    "argon2": "^0.27.1",
+    "argon2": "^0.27.2",
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
     "cloudinary": "^1.25.1",
