@@ -1,8 +1,9 @@
 node_modules
 config.env
-package-lock.json
 webpack.mix.js
 .prettierrc
 .eslintrc.json
 mix-mainfest.json
 src/resources
+.dccache
+package-lock.json

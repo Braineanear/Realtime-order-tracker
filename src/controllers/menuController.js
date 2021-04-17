@@ -8,6 +8,5 @@ exports.getOrders = catchAsync(async (req, res, next) => {
   if (!menu) {
     return next(new AppError('There is no products to show', 400));
   }
-
   return res.render('menu', { menu });
 });
