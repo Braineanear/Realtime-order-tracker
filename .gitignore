@@ -1,8 +1,8 @@
-/node_modules
-/config.env
-/package-lock.json
-/webpack.mix.js
-/.prettierrc
-/.eslintrc.json
-/mix-mainfest.json
-/src/resources
+node_modules
+config.env
+package-lock.json
+webpack.mix.js
+.prettierrc
+.eslintrc.json
+mix-mainfest.json
+src/resources
