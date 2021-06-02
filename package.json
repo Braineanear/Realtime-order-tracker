@@ -36,7 +36,7 @@
     "webpack": "^5.33.2"
   },
   "dependencies": {
-    "argon2": "^0.27.2",
+    "argon2": "^0.28.0",
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
     "cloudinary": "^1.25.1",
