@@ -68,7 +68,7 @@
     "pm2": "^4.5.6",
     "sharp": "^0.27.2",
     "slugify": "^1.5.0",
-    "socket.io": "^3.1.2",
+    "socket.io": "^4.2.0",
     "streamifier": "^0.1.1",
     "validator": "^13.5.2",
     "xss-clean": "^0.1.1"
